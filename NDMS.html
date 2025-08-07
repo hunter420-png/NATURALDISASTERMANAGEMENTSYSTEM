@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Disaster & Nature Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #dbeafe, #f0f9ff);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+      font-size: 2.5em;
+    }
+    .section {
+      background: #ffffffee;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px 0;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    ul li {
+      padding: 5px 0;
+    }
+    canvas {
+      max-width: 100%;
+      margin-top: 15px;
+    }
+    input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Disaster & Nature Management</h1>
+
+  <div class="section">
+    <h2>📝 User Sign-Up</h2>
+    <form onsubmit="submitForm(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+
+      <label for="mobile">Mobile No:</label>
+      <input type="tel" id="mobile" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>🆘 Survival Tips</h2>
+    <ul>
+      <li>Stay calm and assess the situation</li>
+      <li>Find a safe location</li>
+      <li>Keep emergency kit ready</li>
+      <li>Follow official alerts</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📞 Emergency Call</h2>
+    <button onclick="call('112')">🚨 Call 112 (Emergency)</button><br>
+    <button onclick="call('100')">🚓 Call 100 (Police)</button><br>
+    <button onclick="call('101')">🔥 Call 101 (Fire)</button><br>
+    <button onclick="call('102')">🚑 Call 102 (Ambulance)</button>
+  </div>
+
+  <div class="section">
+    <h2>📍 Nearby Help Centers</h2>
+    <button onclick="openMap()">Show Nearby Hospitals</button>
+  </div>
+
+  <div class="section">
+    <h2>🧯 Safety Checklist</h2>
+    <ul>
+      <li><input type="checkbox"> First Aid Kit</li>
+      <li><input type="checkbox"> Emergency Contacts</li>
+      <li><input type="checkbox"> Water & Food</li>
+      <li><input type="checkbox"> Torchlight & Battery</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>📢 Latest News Alerts</h2>
+    <p><em>Connect to internet to view live alerts.</em></p>
+    <button onclick="openNews()">🔍 View Disaster News</button>
+  </div>
+
+  <div class="section">
+    <h2>🌦 Weekly Climate Report</h2>
+    <ul>
+      <li>🌞 Monday - Temp: 32°C | Humidity: 60%</li>
+      <li>🌤 Tuesday - Temp: 33°C | Humidity: 55%</li>
+      <li>🌧 Wednesday - Temp: 30°C | Humidity: 75%</li>
+      <li>⛅ Thursday - Temp: 31°C | Humidity: 65%</li>
+      <li>🌞 Friday - Temp: 34°C | Humidity: 50%</li>
+      <li>🌧 Saturday - Temp: 29°C | Humidity: 80%</li>
+      <li>🌤 Sunday - Temp: 31°C | Humidity: 58%</li>
+    </ul>
+    <canvas id="climateChart"></canvas>
+  </div>
+
+  <script>
+    function call(number) {
+      window.location.href = 'tel:' + number;
+    }
+
+    function openMap() {
+      window.open("https://www.google.com/maps/search/nearby+hospitals", "_blank");
+    }
+
+    function openNews() {
+      window.open("https://www.google.com/search?q=disaster+news+near+me", "_blank");
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const location = document.getElementById('location').value;
+      const email = document.getElementById('email').value;
+      const mobile = document.getElementById('mobile').value;
+
+      alert("Thank you, " + name + "! Your data has been recorded.");
+
+      // Placeholder: you can add SMS/Email APIs here
+      console.log(`Send SMS to ${mobile}`);
+      console.log(`Send Email to ${email}`);
+    }
+
+    const ctx = document.getElementById('climateChart').getContext('2d');
+    const climateChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+          {
+            label: 'Temperature (°C)',
+            data: [32, 33, 30, 31, 34, 29, 31],
+            borderColor: 'orange',
+            fill: false,
+            tension: 0.2
+          },
+          {
+            label: 'Humidity (%)',
+            data: [60, 55, 75, 65, 50, 80, 58],
+            borderColor: 'blue',
+            fill: false,
+            tension: 0.2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
